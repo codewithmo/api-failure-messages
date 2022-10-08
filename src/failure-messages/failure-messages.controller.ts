@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateMessageDto } from './create-message.dto';
 import { FailureMessagesService } from './failure-messages.service';
 
@@ -14,5 +14,10 @@ export class FailureMessagesController {
   @Get()
   async findAll() {
     return await this.failureMessageService.findAll();
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    return await this.failureMessageService.getById(id);
   }
 }

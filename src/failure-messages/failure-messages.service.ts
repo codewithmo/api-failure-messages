@@ -11,7 +11,12 @@ export class FailureMessagesService {
   ) {}
   async createMessage(input: CreateMessageDto) {
     try {
-      return await this.messageRepository.save(input);
+      let dataToDb = {
+        ...input,
+        createdAt: new Date().toISOString(),
+        status: input.status,
+      };
+      return await this.messageRepository.save(dataToDb);
     } catch (err) {
       return err;
     }
@@ -19,5 +24,9 @@ export class FailureMessagesService {
 
   async findAll() {
     return await this.messageRepository.find();
+  }
+
+  async getById(id: string) {
+    return await this.messageRepository.findOneBy({ id });
   }
 }
